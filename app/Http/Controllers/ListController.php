@@ -19,7 +19,11 @@ class ListController extends Controller
      */
     public function index()
     {
-        return view('lists.index');
+        $task_lists = task_list::select('id', 'title', 'category')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        return view('lists.index', compact('task_lists'));
     }
 
     /**
@@ -42,8 +46,8 @@ class ListController extends Controller
 
         task_list::create([
             'user_id' => Auth::id(),
-            'listTitle' => $request->listTitle,
-            'listCategory' => $request->listCategory,
+            'title' => $request->listTitle,
+            'category' => $request->listCategory,
         ]);
 
         return redirect()->route('lists.index');
