@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\task_list;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            'auth',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('lists.index');
     }
 
     /**
@@ -19,7 +27,7 @@ class ListController extends Controller
      */
     public function create()
     {
-        //
+        return view('lists.create');
     }
 
     /**
@@ -27,7 +35,18 @@ class ListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'listTitle' => ['required', 'string', 'max:30'],
+            'listCategory' => ['required', 'string', 'max:50'],
+        ]);
+
+        task_list::create([
+            'user_id' => Auth::id(),
+            'listTitle' => $request->listTitle,
+            'listCategory' => $request->listCategory,
+        ]);
+
+        return redirect()->route('lists.index');
     }
 
     /**

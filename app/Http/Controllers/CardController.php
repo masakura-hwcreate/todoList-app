@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('cards.index');
     }
 
     /**
@@ -19,7 +20,7 @@ class CardController extends Controller
      */
     public function create()
     {
-        //
+        return view('cards.create');
     }
 
     /**
