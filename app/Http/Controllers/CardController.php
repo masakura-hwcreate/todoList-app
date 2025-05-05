@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\task_list;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -20,7 +21,8 @@ class CardController extends Controller
      */
     public function create()
     {
-        return view('cards.create');
+        $categories = task_list::orderBy('category')->get();
+        return view('cards.create', compact('categories'));
     }
 
     /**
