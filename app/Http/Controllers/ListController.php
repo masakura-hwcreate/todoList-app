@@ -19,9 +19,11 @@ class ListController extends Controller
      */
     public function index()
     {
-        $task_lists = task_list::select('id', 'title', 'category')
-            ->where('user_id', Auth::id())
-            ->get();
+        // $task_lists = task_list::select('id', 'title', 'category')
+        //     ->where('user_id', Auth::id())
+        //     ->get();
+
+        $task_lists = task_list::with('task_cards')->get();
 
         return view('lists.index', compact('task_lists'));
     }

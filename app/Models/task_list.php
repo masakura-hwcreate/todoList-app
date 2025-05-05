@@ -11,4 +11,9 @@ class task_list extends Model
         'title',
         'category',
     ];
+
+    public function task_cards()
+    {
+        return $this->hasMany(task_card::class);
+    }
 }

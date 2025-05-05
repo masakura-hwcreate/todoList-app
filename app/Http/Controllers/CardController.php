@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\task_list;
+use App\Models\task_card;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -30,7 +31,17 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_id' => ['required', 'exists:task_lists,id'],
+            'todoTitle' => ['required', 'string', 'max:60'],
+        ]);
+
+        task_card::create([
+            'task_list_id' => $request->category_id,
+            'title' => $request->todoTitle,
+        ]);
+
+        return redirect()->route('cards.index');
     }
 
     /**

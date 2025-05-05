@@ -12,8 +12,8 @@
                 @csrf
                     <div class="p-6 text-gray-900">
                         <div class="p-2">
-                            <label for="listTitle">カテゴリー</label>
-                            <select>
+                            <label for="category">カテゴリー</label>
+                            <select name="category_id" id="category_id">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->category }}</option>
                                 @endforeach
@@ -21,8 +21,8 @@
                         </div>
                             
                         <div class="p-2">
-                            <label for="listTitle">todoタイトル</label>
-                            <input type="text" id="todoTitle" name="listTitle">
+                            <label for="todoTitle">todoタイトル</label>
+                            <input type="text" id="todoTitle" name="todoTitle">
                         </div>
                     </div>
                     <button type="submit">登録</button>
