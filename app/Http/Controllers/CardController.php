@@ -41,7 +41,7 @@ class CardController extends Controller
             'title' => $request->todoTitle,
         ]);
 
-        return redirect()->route('cards.index');
+        return redirect()->route('lists.index');
     }
 
     /**
@@ -57,7 +57,9 @@ class CardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $card = task_card::findOrFail($id);
+
+        return view('cards.edit', compact('card'));
     }
 
     /**
@@ -65,7 +67,16 @@ class CardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $card = task_card::findOrFail($id);
+
+        $request->validate([
+            'todoTitle' => ['required', 'string', 'max:60'],
+        ]);
+
+        $card->title = $request->todoTitle;
+        $card->save();
+
+        return redirect()->route('lists.index');
     }
 
     /**
@@ -73,6 +84,9 @@ class CardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        task_card::findOrFail($id)->delete();
+
+        return redirect()
+            ->route('lists.index');
     }
 }
